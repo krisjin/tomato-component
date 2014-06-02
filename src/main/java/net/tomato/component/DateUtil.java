@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.ResourceBundle;
 
-/**
+/**日期工具类
  * @author krisjin
  */
 public class DateUtil {
@@ -38,16 +38,99 @@ public class DateUtil {
 		return getTimeAsString(timeMillis, "yyyyMMddHHmmss");
 	}
 
-	public static long getTimeMillis(String timeString) throws ParseException {
-		SimpleDateFormat dateFormat = new SimpleDateFormat();
-		dateFormat.applyPattern("yyyyMMddHHmmss");
-		Date dt = dateFormat.parse(timeString);
-		return dt.getTime();
+	public static String getDateTimeWithLong(long dateTime, String pattern) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+
+		return sdf.format(new Date());
 	}
 
+	/**
+	 * @param timeString
+	 *            日期格式的时间字符串
+	 * @param pattern
+	 *            日期格式
+	 * @return
+	 */
+	public static Date convertStringDateTimeToDate(String timeString, String pattern) {
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+		Date date = null;
+		try {
+			date = sdf.parse(timeString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return date;
+	}
+
+	/**
+	 * Return date format：{2014年6月1日 8:55:21}
+	 * 
+	 * @param timeMillis
+	 * @return
+	 */
 	public static String format(long timeMillis) {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.MEDIUM);
 		return dateFormat.format(new Date(timeMillis));
+	}
+
+	/**
+	 * Return date format：{2014年6月1日 星期日 上午08时57分32秒}
+	 * 
+	 * @param timeMillis
+	 * @return
+	 */
+	public static String format1(long timeMillis) {
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.LONG);
+		return dateFormat.format(new Date(timeMillis));
+	}
+
+	/**
+	 * Return date format：{2014-6-1 8:59:37}
+	 * 
+	 * @param timeMillis
+	 * @return
+	 */
+	public static String format2(long timeMillis) {
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
+		return dateFormat.format(new Date(timeMillis));
+	}
+
+	/**
+	 * 获得日期格式：{2014年06月}
+	 * @param timeMills
+	 * @return
+	 */
+	public static String format3(long timeMills) {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月");
+		return sdf.format(new Date(timeMills));
+	}
+
+	/**
+	 * 获得日期格式：{2014年06月}
+	 * 
+	 * @param dateTime
+	 * @return
+	 * @throws ParseException
+	 */
+	public static String format4(String dateTime) throws ParseException {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy年MM月");
+		
+		Date df = sdf.parse(dateTime);
+		return sdf2.format(df);
+
+	}
+
+	/**
+	 * 获得当前时间的月份：{6月}
+	 * @return
+	 */
+	public static String currentMonth() {
+		Calendar calendar = Calendar.getInstance();
+
+		calendar.setTimeInMillis(System.currentTimeMillis());
+		int month = calendar.get(Calendar.MONTH) + 1;
+		return month + "月";
 	}
 
 	public static long getTimeMillis(int days, int hour, int minutes) {
@@ -112,12 +195,6 @@ public class DateUtil {
 		java.text.SimpleDateFormat formatter = new java.text.SimpleDateFormat(newFormat);
 		return formatter.format(date);
 	}
-	
-	
-	public static void main(String[] args) {
-		String d=DateUtil.format(System.currentTimeMillis());
-		System.out.println(d);
-	}
-	
-	
+
+
 }
