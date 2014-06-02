@@ -23,7 +23,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.OutputKeys;
 
-import net.tomato.compontent.exception.XmlUtilException;
+import net.tomato.component.exception.XmlUtilException;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.xml.serializer.OutputPropertiesFactory;
